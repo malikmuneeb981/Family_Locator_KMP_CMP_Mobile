@@ -65,6 +65,14 @@ actual fun NativeGoogleMap(
     navigatedToCurrentLoc:()-> Unit
 ) {
     val context = LocalContext.current
+
+    // Without an API key the Maps SDK cannot work; show a dialog instead of crashing.
+    val hasMapsApiKey = remember { hasMapsApiKey(context) }
+    if (!hasMapsApiKey) {
+        MapsApiKeyMissingDialog()
+        return
+    }
+
     val fusedLocationClient = remember { LocationServices.getFusedLocationProviderClient(context) }
     val locationRequest = remember {
         LocationRequest.create().apply {
@@ -260,4 +268,14 @@ fun rememberBitmapDescriptor(
             null
         }
     }
+}
+
+private fun hasMapsApiKey(context: Context): Boolean = try {
+    val appInfo = context.packageManager.getApplicationInfo(
+        context.packageName,
+        android.content.pm.PackageManager.GET_META_DATA
+    )
+    !appInfo.metaData?.getString("com.google.android.geo.API_KEY").isNullOrBlank()
+} catch (e: Exception) {
+    false
 }

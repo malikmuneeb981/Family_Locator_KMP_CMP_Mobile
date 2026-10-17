@@ -1,4 +1,12 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
+
+// Google Maps API key is NOT committed. Put MAPS_API_KEY=your_key in local.properties (git-ignored).
+val mapsApiKey: String = Properties().let { props ->
+    val file = rootProject.file("local.properties")
+    if (file.exists()) file.inputStream().use { props.load(it) }
+    props.getProperty("MAPS_API_KEY", "").trim()
+}
 
 plugins {
     alias(libs.plugins.androidApplication)
@@ -30,6 +38,7 @@ android {
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
         versionName = "1.0"
+        manifestPlaceholders["MAPS_API_KEY"] = mapsApiKey
     }
     packaging {
         resources {

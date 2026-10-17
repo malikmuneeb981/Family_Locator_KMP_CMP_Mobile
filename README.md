@@ -177,6 +177,19 @@ iOS-specific functionality includes:
 
 ## Getting Started
 
+> **Important:** To run this project you need **your own Ktor server** (see [Backend Configuration](#backend-configuration)) and **your own Google Maps API key**. Neither is included in this repository. Without a Maps API key the app will not crash, but it shows a dialog saying a key is required and the map is not displayed.
+
+### Google Maps API Key
+
+1. Create a key in the [Google Cloud Console](https://console.cloud.google.com/) with *Maps SDK for Android* and *Maps SDK for iOS* enabled.
+2. **Android:** add this line to `local.properties` in the project root (the file is git-ignored):
+
+   ```properties
+   MAPS_API_KEY=your_google_maps_api_key
+   ```
+
+3. **iOS:** set your key as the value of `GMSApiKey` in `iosApp/iosApp/Info.plist` (do not commit it).
+
 ### Requirements
 
 * Android Studio

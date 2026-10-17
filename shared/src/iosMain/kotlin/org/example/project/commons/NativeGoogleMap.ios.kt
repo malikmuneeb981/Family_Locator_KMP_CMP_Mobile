@@ -76,5 +76,8 @@ actual fun NativeGoogleMap(
             },
             modifier = Modifier.fillMaxSize()
         )
+    } else {
+        // Swift only registers the map factory when a Maps API key is configured.
+        MapsApiKeyMissingDialog()
     }
 }

@@ -12,6 +12,8 @@
 	<string>This app needs continuous location access to keep your family updated on your whereabouts.</string>
     <key>NSCameraUsageDescription</key>
     <string>This app needs camera access to scan QR codes.</string>
+	<key>GMSApiKey</key>
+	<string></string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>

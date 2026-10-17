@@ -5,8 +5,12 @@ import Shared
 @main
 struct iOSApp: App {
     init() {
-        // Initialize Google Maps SDK
-        GMSServices.provideAPIKey("AIzaSyA9kMKaTxXHn2MsGMz42StxBWeXYbUB8ak")
+        // Initialize Google Maps SDK. The key is read from Info.plist ("GMSApiKey") and is NOT committed.
+        // Without a key the map factory stays unset and the shared UI shows an "API key required" dialog.
+        let mapsApiKey = (Bundle.main.object(forInfoDictionaryKey: "GMSApiKey") as? String)?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        guard !mapsApiKey.isEmpty else { return }
+        GMSServices.provideAPIKey(mapsApiKey)
 
         // ── Factory: called once when UIKitView first composes ────────────────────────────
         // Mirrors the initial setup inside Android's NativeGoogleMap composable.
